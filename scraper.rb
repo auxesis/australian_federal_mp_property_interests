@@ -32,10 +32,11 @@ def extract_column_names(table)
 end
 
 def extract_properties(table, columns)
-  properties = table.search('tr')[1..-1].map {|row|
-    Hash[row.search('td').each_with_index.map {|td, index|
+  properties = table.search('tr')[1..-1].each_with_index.map {|row, row_index|
+    attrs = Hash[row.search('td').each_with_index.map {|td, index|
       [ columns[index], td.text.strip ]
     }]
+    attrs.merge({'index' => row_index})
   }
 end
 
@@ -61,6 +62,7 @@ def scrape_properties
   properties = extract_properties(table, columns)
   properties.each {|property| add_property_type_if_available(property) }
   properties.each {|property| add_id(property) }
+  properties.each {|property| property.delete('index') } # we nuke this as it's only used to build an id
 end
 
 def count_per_party(properties)
