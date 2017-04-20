@@ -72,6 +72,7 @@ def main
   properties = scrape_properties
   new_properties = properties.select {|r| !existing_record_ids.include?(r[primary_key])}
 
+  puts "[info] There are #{properties.size} existing properties"
   puts "[info] There are #{new_properties.size} new properties"
   ScraperWiki.save_sqlite(['id'], new_properties)
 end
