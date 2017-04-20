@@ -68,7 +68,7 @@ def count_per_party(properties)
 end
 
 def main
-  mock! if ENV['SCRAPER_ENV'] == 'test'
+  mock! if ENV['SCRAPER_ENV'] == 'dev'
   properties = scrape_properties
   new_properties = properties.select {|r| !existing_record_ids.include?(r[primary_key])}
 
