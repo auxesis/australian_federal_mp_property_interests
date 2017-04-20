@@ -65,8 +65,8 @@ def scrape_properties
   properties.each {|property| property.delete('index') } # we nuke this as it's only used to build an id
 end
 
-def count_per_party(properties)
-  properties.map {|d| d['party']}.uniq.map {|party| [ party, properties.select {|d| d['party'] == party}.size ] }
+def group_and_count_by(column, properties)
+  properties.map {|d| d[column]}.uniq.map {|c| [ c, properties.select {|d| d[column] == c}.size]}
 end
 
 def main
